@@ -10,4 +10,9 @@ class Api::V1::SubscriptionsController < ApplicationController
                                         frequency: params[:frequency]
                                         )
   end
+
+  def update
+    subscription = Subscription.find(params[:id])
+    subscription.update(status: "unsubscribed")
+  end
 end
