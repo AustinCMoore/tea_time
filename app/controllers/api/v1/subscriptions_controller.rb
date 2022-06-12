@@ -15,4 +15,13 @@ class Api::V1::SubscriptionsController < ApplicationController
     subscription = Subscription.find(params[:id])
     subscription.update(status: "unsubscribed")
   end
+
+  def index
+    customer = Customer.find(params[:customer_id])
+    active_subs = customer.subscribed
+    inactive_subs = customer.unsubscribed
+    subs = SubscriptionsPoro.new(active_subs, inactive_subs)
+
+    render json: SubscriptionsSerializer.new(subs)
+  end
 end
